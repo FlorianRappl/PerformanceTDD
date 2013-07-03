@@ -1,0 +1,111 @@
+﻿<Window x:Class="Performance.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:Performance"
+        Title="MainWindow" Height="350" Width="525">
+    
+    <Window.DataContext>
+        <local:Game />
+    </Window.DataContext>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="80" />
+            <RowDefinition Height="80" />
+        </Grid.RowDefinitions>
+        
+        <ItemsControl ItemsSource="{Binding Frames}"
+                      Grid.Row="0"
+                      HorizontalContentAlignment="Stretch"
+                      HorizontalAlignment="Stretch"
+                      Margin="15">
+            
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Rows="1" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <Rectangle Grid.Row="0"
+                                   Grid.Column="0"
+                                   Grid.RowSpan="3"
+                                   Grid.ColumnSpan="2"
+                                   Stroke="Black" />
+
+                        <TextBlock Grid.Row="0"
+                                   Grid.Column="0"
+                                   Grid.ColumnSpan="2"
+                                   TextAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontSize="32"
+                                   Foreground="Red"
+                                   FontWeight="Light"
+                                   Text="{Binding Number}" />
+
+                        <TextBlock Grid.Row="1"
+                                   Grid.Column="0"
+                                   VerticalAlignment="Center"
+                                   FontSize="16"
+                                   TextAlignment="Center"
+                                   Text="{Binding Throw1}" />
+
+                        <TextBlock Grid.Row="1"
+                                   Grid.Column="1"
+                                   VerticalAlignment="Center"
+                                   FontSize="16"
+                                   TextAlignment="Center"
+                                   Text="{Binding Throw2}" />
+
+                        <TextBlock Grid.Row="2"
+                                   Grid.Column="0"
+                                   Grid.ColumnSpan="2"
+                                   FontSize="32"
+                                   VerticalAlignment="Center"
+                                   Foreground="SteelBlue"
+                                   TextAlignment="Center"
+                                   FontWeight="Bold"
+                                   Text="{Binding TotalScore}" />
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        
+        <Slider Value="{Binding CurrentThrow.Pins}"
+                Grid.Row="1"
+                Minimum="0"
+                Margin="15"
+                Maximum="{Binding CurrentFrame.RestPins}" />
+
+        <TextBlock Text="{Binding CurrentThrow.Pins,StringFormat={}{0}pins}"
+                   Grid.Row="2"
+                   Foreground="DarkGray"
+                   FontSize="20"
+                   Margin="15"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Left" />
+        
+        <Button IsEnabled="{Binding Running}"
+                Grid.Row="2"
+                Grid.Column="0"
+                Width="200"
+                Margin="15"
+                HorizontalAlignment="Right"
+                Content="Throw!"
+                Command="{Binding ThrowCommand}" />
+    </Grid>
+</Window>
